@@ -20,14 +20,6 @@ export const verifyToken = (token: string): JwtPayload => {
 
 // ------------------------------------------------------------------
 
-// const getBaseURL = () => {
-//   return headers().then((h) => {
-//     const host = h.get('host');
-//     const protocol = h.get('x-forwarded-proto') || 'http';
-
-//     return `${protocol}://${host}`;
-//   });
-// };
 
 // better auth
 export const auth = betterAuth({
