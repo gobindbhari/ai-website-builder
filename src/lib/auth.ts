@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import prisma from "@/lib/prisma";
+import { headers } from "next/headers";
 // import { username } from "better-auth/plugins"
 
 
@@ -19,13 +20,22 @@ export const verifyToken = (token: string): JwtPayload => {
 
 // ------------------------------------------------------------------
 
+const getBaseURL = () => {
+  return headers().then((h) => {
+    const host = h.get('host');
+    const protocol = h.get('x-forwarded-proto') || 'http';
 
+    return `${protocol}://${host}`;
+  });
+};
 
 // better auth
 export const auth = betterAuth({
+
   database: prismaAdapter(prisma, {
     provider: "postgresql", // or "mysql", "postgresql", ...etc
   }),
+
   session: {
     expiresIn: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24 * 2, // Optional: refresh session after 1 day of inactivity
@@ -34,6 +44,11 @@ export const auth = betterAuth({
       maxAge: 60 * 60, // 1 hour
       strategy: "compact"
     }
+  },
+
+  baseURL: {
+    allowedHosts: [ "*.vercel.app", ],
+    fallback: "http://localhost:3000"
   },
 
 
