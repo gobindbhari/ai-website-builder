@@ -56,7 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased ${poppins.variable} font-poppins`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased ${poppins.variable} font-poppins!`}
       >
         <Providers>
           <Navbar />

@@ -228,7 +228,7 @@ const PromptInputBox = ({ submitFc }: PromptInputBoxProps) => {
                                 open={modelSelectorOpen}
                             >
                                 {/* <ModelSelectorTrigger asChild={true}> */}
-                                <ModelSelectorTrigger >
+                                <ModelSelectorTrigger render={<div />} nativeButton={false} >
                                     <PromptInputButton>
                                         {selectedModelData?.chefSlug && (
                                             //   <ModelSelectorLogo

@@ -34,12 +34,9 @@ export function Navbar() {
   useEffect(() => {
     // console.log("session --", session)
     setIsHome(pathname === "/")
-  })
+  }, [pathname])
 
-  const noNavbar = ["/builder", "/builder-streams"]
-  if (noNavbar.includes(pathname)) {
-    return null
-  }
+  
 
   useEffect(() => {
     setMounted(true);
@@ -50,6 +47,11 @@ export function Navbar() {
 
     return () => unsubscribe();
   }, [scrollY]);
+
+  const noNavbar = ["/builder", "/builder-streams"]
+  if (noNavbar.includes(pathname)) {
+    return null
+  }
 
   if (!mounted) {
     return null;
@@ -113,19 +115,19 @@ export function Navbar() {
           </div>}
 
           <div className="flex items-center gap-4">
-            {pathname !== "/builder" && 
-            <ThemeTogglerButton size={"xs"} className='bg-black/70! dark:bg-white/70!' />
-            // <button
-            //   onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            //   className="p-2 rounded-lg hover:bg-accent transition-colors"
-            //   aria-label="Toggle theme"
-            // >
-            //   {theme === 'dark' ? (
-            //     <Sun className="w-5 h-5" />
-            //   ) : (
-            //     <Moon className="w-5 h-5" />
-            //   )}
-            // </button>
+            {pathname !== "/builder" &&
+              <ThemeTogglerButton size={"xs"} className='bg-black/70! dark:bg-white/70!' />
+              // <button
+              //   onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              //   className="p-2 rounded-lg hover:bg-accent transition-colors"
+              //   aria-label="Toggle theme"
+              // >
+              //   {theme === 'dark' ? (
+              //     <Sun className="w-5 h-5" />
+              //   ) : (
+              //     <Moon className="w-5 h-5" />
+              //   )}
+              // </button>
             }
 
             <div className="relative hidden md:flex items-center gap-4">
@@ -149,7 +151,7 @@ export function Navbar() {
                 //   Log out
                 // </Button>
               }
-              
+
               {isHome && <Link href={session ? "/chat" : "/signin"}>
                 <Button
                   size="sm"
@@ -158,8 +160,8 @@ export function Navbar() {
                   Get Started
                 </Button>
               </Link>}
-              
-              { session && <AvatarDropdown/>}
+
+              {session && <AvatarDropdown />}
             </div>
 
             <button

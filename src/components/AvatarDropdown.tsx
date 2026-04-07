@@ -18,6 +18,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { authClient } from "@/lib/auth-client"
+import Link from "next/link"
 import { toast } from "sonner"
 
 
@@ -36,8 +37,8 @@ export function AvatarDropdown() {
             <DropdownMenuContent className="w-32  border border-black/30! dark:border-white/30!" alignOffset={10} sideOffset={10} >
                 <DropdownMenuGroup>
                     <DropdownMenuItem>Projects</DropdownMenuItem>
-                    {/* <DropdownMenuItem>Billing</DropdownMenuItem>
-                    <DropdownMenuItem>Settings</DropdownMenuItem> */}
+                    <DropdownMenuItem><Link href={"/chat"}>Create Project</Link></DropdownMenuItem>
+                    {/* <DropdownMenuItem>Settings</DropdownMenuItem> */}
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>

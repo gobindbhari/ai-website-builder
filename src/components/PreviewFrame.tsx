@@ -42,15 +42,15 @@ export function PreviewFrame({ files, webContainer }: PreviewFrameProps) {
     main()
   }, [])
   return (
-    <div className="h-full w-full flex items-center justify-center text-gray-400">
+    <div className=" h-[90vh] w-full flex items-center justify-center text-gray-400">
       {!url && <div className="text-center w-64 flex flex-col items-center">
         <p className="mb-2  flex items-center gap-2">
           <Loader2 className='animate-spin'/> 
-          <Shimmer>Loading...</Shimmer>
+          <p>Loading...</p>
         </p>
-        <Shimmer>
+        <p>
         It can take a few moments, so please wait until it finishes.
-        </Shimmer>
+        </p>
       </div>}
       {url && <iframe width={"100%"} height={"100%"} src={url} />}
     </div>
