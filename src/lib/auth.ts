@@ -20,14 +20,14 @@ export const verifyToken = (token: string): JwtPayload => {
 
 // ------------------------------------------------------------------
 
-const getBaseURL = () => {
-  return headers().then((h) => {
-    const host = h.get('host');
-    const protocol = h.get('x-forwarded-proto') || 'http';
+// const getBaseURL = () => {
+//   return headers().then((h) => {
+//     const host = h.get('host');
+//     const protocol = h.get('x-forwarded-proto') || 'http';
 
-    return `${protocol}://${host}`;
-  });
-};
+//     return `${protocol}://${host}`;
+//   });
+// };
 
 // better auth
 export const auth = betterAuth({
@@ -47,7 +47,7 @@ export const auth = betterAuth({
   },
 
   baseURL: {
-    allowedHosts: [ "*.vercel.app", ],
+    allowedHosts: [ "https://ai-website-builder-pink.vercel.app", "*.vercel.app", ],
     fallback: "http://localhost:3000"
   },
 
