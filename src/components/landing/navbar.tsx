@@ -48,7 +48,7 @@ export function Navbar() {
     return () => unsubscribe();
   }, [scrollY]);
 
-  const noNavbar = ["/builder", "/builder-streams"]
+  const noNavbar = ["/builder", "/new-builder", "/builder-streams"]
   if (noNavbar.includes(pathname)) {
     return null
   }

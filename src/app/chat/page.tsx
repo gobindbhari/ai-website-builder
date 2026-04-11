@@ -28,6 +28,7 @@ export default function Home() {
 
     localStorage.setItem("prompt", prompt);
     router.push("/builder")
+    // router.push("/new-builder")
 
   };
 

@@ -12,13 +12,14 @@ import { TabView } from '@/components/TabView';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useWebContainer } from '@/hooks/useWebContainer';
 import { cn } from '@/lib/utils';
-import { ChatHistory, FileItem, Step, StepType } from '@/types';
+import { ChatHistory, ChatMessage, FileItem, Step, StepType } from '@/types';
 import { parseXml, parseXmlChat } from '@/utils/step';
 import axios from 'axios';
 import { Zap } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react'
+import { string } from 'zod';
 
 
 const MOCK_FILE_CONTENT = `// This is a sample file content
@@ -227,7 +228,7 @@ const Page = () => {
             )
 
             const msg = !isInitialSetupExists ?
-            "initial setup of project" : "changing file or editing files"
+                "initial setup of project" : "changing file or editing files"
             return [
                 ...e,
                 parseXmlChat(chatRouteRes)[0],
@@ -236,6 +237,7 @@ const Page = () => {
             ]
         })
 
+        // setFiles(parseXmlChat(chatRouteRes)[1])
 
         setLoading(false);
 
@@ -246,21 +248,36 @@ const Page = () => {
             status: "pending" as "pending"
         }))]);
 
+        const llmMsg = [
+            ...[...prompts, prompt].map((content: string) => ({
+                role: "user",
+                content 
+            })),
+            { role: "assistant", content: stepsResponse.data.response as string}
+        ]
+
+        localStorage.setItem("llmMsg", JSON.stringify(llmMsg))
+
         setLlmMessages([...prompts, prompt].map(content => ({
             role: "user",
             content
         })));
 
         setLlmMessages(x => [...x, { role: "assistant", content: stepsResponse.data.response }])
+
+
+        console.log("llmMessages 257 --", llmMessages)
     }
 
     useEffect(() => {
         setPrompt(localStorage.getItem("prompt") as string)
         init();
+        console.log("llmMessages 262 --", llmMessages)
     }, [])
 
     const sendBtnHandle = async (msg: PromptInputMessage) => {
-        const newMessage = {
+        console.log("llmMessages 265 --", llmMessages)
+        const newMessage: ChatMessage = {
             role: "user" as "user",
             content: msg.text
             // content: userPrompt
@@ -277,8 +294,11 @@ const Page = () => {
 
         setLoading(true);
 
+        const llmMsg: ChatMessage[] = JSON.parse(localStorage.getItem("llmMsg") || "[]")
+       
         const stepsResponse = await axios.post(`/api/chat`, {
-            messages: [...llmMessages, newMessage]
+            // messages: [...llmMessages, newMessage]
+            messages: [...llmMsg.slice(0, 6), newMessage]
         });
         setLoading(false);
 
@@ -288,6 +308,13 @@ const Page = () => {
             role: "assistant",
             content: stepsResponse.data.response
         }]);
+        const newllmMsg = [
+            ...llmMsg,
+            newMessage,
+            { role: "assistant", content: stepsResponse.data.response }
+        ]
+
+        localStorage.setItem("llmMsg", JSON.stringify(newllmMsg))
 
         setChatHistory(e => [
             ...e,
@@ -334,8 +361,8 @@ const Page = () => {
                                 <StepsList
                                     // steps={steps}
                                     steps={chatHistory}
-                                    currentStep={currentStep}
-                                    onStepClick={setCurrentStep}
+                                // currentStep={currentStep}
+                                // onStepClick={setCurrentStep}
                                 />
                             </ScrollArea>
                             {/* // prompt section */}

@@ -9,11 +9,11 @@ import ReactMarkdown from "react-markdown"; // ✅ default export
 interface StepsListProps {
   // steps: Step[];
   steps: ChatHistory[];
-  currentStep: number;
-  onStepClick: (stepId: number) => void;
+  // currentStep: number;
+  // onStepClick: (stepId: number) => void;
 }
 
-export function StepsList({ steps, currentStep, onStepClick }: StepsListProps) {
+export function StepsList({ steps }: StepsListProps) {
 
   const containerRef = useRef<HTMLDivElement | null>(null);
 

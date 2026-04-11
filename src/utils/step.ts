@@ -67,6 +67,11 @@ export function parseXml(response: string): Step[] {
     const [, type, filePath, content] = match;
 
     if (type === 'file') {
+      const cleanCode = content
+        .replace(/```[a-zA-Z]*\n?/g, '')
+        .replace(/```/g, '')
+        .trim();
+
       // File creation step
       steps.push({
         id: stepId++,
@@ -74,7 +79,7 @@ export function parseXml(response: string): Step[] {
         description: '',
         type: StepType.CreateFile,
         status: 'pending',
-        code: content.trim(),
+        code: cleanCode,
         path: filePath
       });
     } else if (type === 'shell') {
@@ -107,7 +112,7 @@ export function parseXmlChat(response: string, msg?: string): ChatHistory[] {
     createdAt: Date.now(),
   })
   // chatsteps[0].text = chat[0]
-  
+
   // Extract the XML content between <boltArtifact> tags
   const xmlMatch = response.match(/<boltArtifact[^>]*>([\s\S]*?)<\/boltArtifact>/);
 
@@ -176,13 +181,18 @@ export function parseXmlFiles(response: string): StepFiles[] {
     const [, type, filePath, content] = match;
 
     if (type === 'file') {
+      const cleanCode = content
+        .replace(/```[a-zA-Z]*\n?/g, '')
+        .replace(/```/g, '')
+        .trim();
+
       // File creation step
       steps.push({
         // title: `Create ${filePath || 'file'}`,
-        title: filePath.split("/").pop() || filePath ,
+        title: filePath.split("/").pop() || filePath,
         // description: '',
         type: StepType.CreateFile,
-        code: content.trim(),
+        code: cleanCode,
         path: filePath
       });
     } else if (type === 'shell') {

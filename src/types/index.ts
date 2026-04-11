@@ -84,3 +84,8 @@ export type ChatHistory = TextChatHistory | FileChatHistory
 export interface Files {
   
 }
+
+export interface ChatMessage {
+    role: "user" | "assistant";
+    content: string;
+}
