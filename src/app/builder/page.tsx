@@ -298,7 +298,7 @@ const Page = () => {
        
         const stepsResponse = await axios.post(`/api/chat`, {
             // messages: [...llmMessages, newMessage]
-            messages: [...llmMsg.slice(0, 6), newMessage]
+            messages: [...llmMsg.slice(-6), newMessage]
         });
         setLoading(false);
 
