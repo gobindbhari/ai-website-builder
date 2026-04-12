@@ -328,8 +328,8 @@ const Page = () => {
                                 <StepsList
                                     // steps={steps}
                                     steps={chatHistory}
-                                    currentStep={currentStep}
-                                    onStepClick={setCurrentStep}
+                                    // currentStep={currentStep}
+                                    // onStepClick={setCurrentStep}
                                 />
                             </ScrollArea>
                             {/* // prompt section */}
